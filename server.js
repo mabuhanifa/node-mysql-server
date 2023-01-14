@@ -17,6 +17,17 @@ app.get("/products", (req, res) => {
   });
 });
 
+app.get("/products/:id", (req, res) => {
+  const { id } = req.params;
+  const q = "SELECT * FROM products WHERE id = ?";
+  db.query(q,[id], (err, data) => {
+    if (err) {
+      res.json(err);
+    }
+    return res.json(data);
+  });
+});
+
 app.post("/products", (req, res) => {
   const title = req.body.title;
   const info = req.body.info;
