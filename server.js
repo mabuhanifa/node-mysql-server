@@ -17,6 +17,29 @@ app.get("/products", (req, res) => {
   });
 });
 
+app.post("/products", (req, res) => {
+  const title = req.body.title;
+  const info = req.body.info;
+  const price = req.body.price;
+  const img = req.body.img;
+
+  db.query(
+    "INSERT INTO products (title, info, price, img) VALUES (?,?,?,?)",
+    [title, info, price, img],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res
+          .status(201)
+          .json({
+            message: `Product with title '${title}' created successfully`,
+          });
+      }
+    }
+  );
+});
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
