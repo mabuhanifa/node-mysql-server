@@ -30,14 +30,29 @@ app.post("/products", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res
-          .status(201)
-          .json({
-            message: `Product with title '${title}' created successfully`,
-          });
+        res.status(201).json({
+          message: `Product with title '${title}' created successfully`,
+        });
       }
     }
   );
+});
+
+app.delete("/products/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM products WHERE id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } else {
+      if (result.affectedRows) {
+        res.send({
+          message: `Product with id '${id}' deleted successfully`,
+          result,
+        });
+      }
+    }
+  });
 });
 
 app.listen(port, () => {
