@@ -7,6 +7,7 @@ app.use(express.json());
 app.use(cors());
 const port = 5000;
 
+// getting all products from the database
 app.get("/products", (req, res) => {
   const q = "SELECT * FROM products";
   db.query(q, (err, data) => {
@@ -17,6 +18,7 @@ app.get("/products", (req, res) => {
   });
 });
 
+// getting a product from the database by id
 app.get("/products/:id", (req, res) => {
   const { id } = req.params;
   const q = "SELECT * FROM products WHERE id = ?";
@@ -28,6 +30,7 @@ app.get("/products/:id", (req, res) => {
   });
 });
 
+// creating a product
 app.post("/products", (req, res) => {
   const title = req.body.title;
   const info = req.body.info;
@@ -49,6 +52,7 @@ app.post("/products", (req, res) => {
   );
 });
 
+// deleting a product by id
 app.delete("/products/:id", (req, res) => {
   const id = req.params.id;
   db.query("DELETE FROM products WHERE id = ?", id, (err, result) => {
@@ -66,7 +70,7 @@ app.delete("/products/:id", (req, res) => {
   });
 });
 
-
+// updating a product by id
 app.put("/products/:id", (req, res) => {
   const { id } = req.params;
 
