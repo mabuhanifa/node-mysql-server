@@ -20,7 +20,7 @@ app.get("/products", (req, res) => {
 app.get("/products/:id", (req, res) => {
   const { id } = req.params;
   const q = "SELECT * FROM products WHERE id = ?";
-  db.query(q,[id], (err, data) => {
+  db.query(q, [id], (err, data) => {
     if (err) {
       res.json(err);
     }
@@ -63,6 +63,21 @@ app.delete("/products/:id", (req, res) => {
         });
       }
     }
+  });
+});
+
+
+app.put("/products/:id", (req, res) => {
+  const { id } = req.params;
+
+  const q =
+    "UPDATE products SET `title`= ?, `info`= ?, `price`= ?, `img`= ? WHERE id = ?";
+
+  const values = [req.body.title, req.body.info, req.body.price, req.body.img];
+  console.log(values);
+  db.query(q, [...values, id], (err, data) => {
+    if (err) return res.send(err);
+    return res.json(data);
   });
 });
 
