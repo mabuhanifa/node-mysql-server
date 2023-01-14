@@ -5,7 +5,7 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // getting all products from the database
 app.get("/products", (req, res) => {
